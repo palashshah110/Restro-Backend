@@ -1,32 +1,49 @@
-import winston from 'winston';
-import { Request, Response, NextFunction } from 'express';
+import winston from "winston";
+import { Request, Response, NextFunction } from "express";
+
+const isProd = process.env.NODE_ENV === "production";
 
 export const logger = winston.createLogger({
-  level: 'info',
+  level: "info",
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.errors({ stack: true }),
     winston.format.json()
   ),
-  defaultMeta: { service: 'super-admin-api' },
+  defaultMeta: { service: "super-admin-api" },
   transports: [
-    new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'logs/combined.log' }),
+    // Always log to console (works on Vercel + local)
+    new winston.transports.Console({
+      format: isProd ? winston.format.json() : winston.format.simple(),
+    }),
+
+    // File logging only in local/dev
+    ...(!isProd
+      ? [
+          new winston.transports.File({
+            filename: "logs/error.log",
+            level: "error",
+          }),
+          new winston.transports.File({
+            filename: "logs/combined.log",
+          }),
+        ]
+      : []),
   ],
 });
 
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.simple()
-  }));
-}
-
-export const requestLogger = (req: Request, res: Response, next: NextFunction) => {
+export const requestLogger = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = Date.now() - start;
-    logger.info(`${req.method} ${req.originalUrl} ${res.statusCode} ${duration}ms`);
+    logger.info(
+      `${req.method} ${req.originalUrl} ${res.statusCode} ${duration}ms`
+    );
   });
 
   next();
