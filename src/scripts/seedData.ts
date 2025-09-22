@@ -8,7 +8,7 @@ import { logger } from '../middleware/logger';
 const seedData = async () => {
   try {
     await mongoose.connect(config.MONGODB_URI);
-    logger.info('Connected to MongoDB for seeding');
+    console.info('Connected to MongoDB for seeding');
 
     // Clear existing data
     await Promise.all([
@@ -87,14 +87,14 @@ const seedData = async () => {
       }
     ]);
 
-    logger.info(`Seeded ${cafes.length} cafes`);
-    logger.info(`Seeded ${plans.length} plans`);
-    logger.info(`Seeded ${orders.length} orders`);
-    logger.info('Database seeding completed successfully');
+    console.info(`Seeded ${cafes.length} cafes`);
+    console.info(`Seeded ${plans.length} plans`);
+    console.info(`Seeded ${orders.length} orders`);
+    console.info('Database seeding completed successfully');
 
     process.exit(0);
   } catch (error) {
-    logger.error('Error seeding database:', error);
+    console.error('Error seeding database:', error);
     process.exit(1);
   }
 };

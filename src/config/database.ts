@@ -26,17 +26,17 @@ export const connectDatabase = async (): Promise<void> => {
     const conn = await mongoose.connect(config.MONGODB_URI);
     connectionCache.main = conn;
 
-    logger.info("✅ Connected to main MongoDB database");
+    console.info("✅ Connected to main MongoDB database");
 
     conn.connection.on("error", (error) => {
-      logger.error("❌ MongoDB connection error:", error);
+      console.error("❌ MongoDB connection error:", error);
     });
 
     conn.connection.on("disconnected", () => {
-      logger.warn("⚠️ MongoDB disconnected");
+      console.warn("⚠️ MongoDB disconnected");
     });
   } catch (error) {
-    logger.error("❌ Failed to connect to MongoDB:", error);
+    console.error("❌ Failed to connect to MongoDB:", error);
     throw error; // ❌ do NOT process.exit() on Vercel
   }
 };
@@ -53,11 +53,11 @@ export const getTenantConnection = (subdomain: string): Connection => {
   const connection = mongoose.createConnection(tenantDbUri);
 
   connection.on("connected", () => {
-    logger.info(`✅ Connected to tenant DB: ${subdomain}`);
+    console.info(`✅ Connected to tenant DB: ${subdomain}`);
   });
 
   connection.on("error", (error) => {
-    logger.error(`❌ Tenant DB connection error for ${subdomain}:`, error);
+    console.error(`❌ Tenant DB connection error for ${subdomain}:`, error);
   });
 
   connectionCache.tenants[subdomain] = connection;
