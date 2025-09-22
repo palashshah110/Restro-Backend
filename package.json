@@ -2,11 +2,11 @@
   "name": "restro-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only api/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only server.ts",
     "build": "tsc",
-    "start": "node api/index.js",
+    "start": "node server.js",
     "lint": "eslint **/*.ts",
     "test": "jest"
   },
