@@ -4,10 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only api/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only server.ts",
     "build": "tsc",
-    "start": "node api/index.js",
-    "lint": "eslint **/*.ts",
+    "start": "node api/server.js",
+    "lint": "eslint server.ts",
     "test": "jest"
   },
   "keywords": [
