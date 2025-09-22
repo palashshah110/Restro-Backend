@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only api/index.ts",
     "build": "tsc",
-    "start": "node index.js",
+    "start": "node api/index.js",
     "lint": "eslint **/*.ts",
     "test": "jest"
   },
