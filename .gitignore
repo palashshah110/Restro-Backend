@@ -4,8 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-error.log
-combined.log
+
 # testing
 /coverage
 .env
