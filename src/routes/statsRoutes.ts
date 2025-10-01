@@ -1,11 +1,13 @@
 import { Router } from 'express';
-import { dummyAuth } from '../middleware/auth';
-import { getStats } from '../controllers/stats.controller';
+import { authenticate } from '../middleware/auth';
+import { getStats, getCafeStats } from '../controllers/stats.controller';
 
 const router = Router();
 
-router.use(dummyAuth); 
+router.use(authenticate); 
 router.route('/')
   .get(getStats);
+
+router.get("/cafe", getCafeStats);
 
 export default router;

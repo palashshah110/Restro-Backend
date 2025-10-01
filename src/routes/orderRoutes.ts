@@ -5,12 +5,12 @@ import {
   getOrderById,
   updateOrderStatus
 } from '../controllers/orderController';
-import { dummyAuth } from '../middleware/auth';
+import { authenticate } from '../middleware/auth';
 import { validateOrder, validateOrderStatus } from '../middleware/validation';
 
 const router = Router();
 
-router.use(dummyAuth); 
+router.use(authenticate); 
 
 router.route('/')
   .post(validateOrder, createOrder)

@@ -6,12 +6,13 @@ import {
   updateCafe,
   deleteCafe
 } from '../controllers/cafeController';
-import { dummyAuth } from '../middleware/auth';
+import { authenticate } from '../middleware/auth';
 import { validateCafe, validateUpdateCafe } from '../middleware/validation';
+import uploadImage from '../utils/uploadImage';
 
 const router = Router();
 
-router.use(dummyAuth);
+router.use(authenticate);
 
 router.route('/')
   .post(validateCafe, createCafe)
@@ -19,7 +20,8 @@ router.route('/')
 
 router.route('/:id')
   .get(getCafeById)
-  .put(validateUpdateCafe, updateCafe)
+  .put(uploadImage("coverImage"), updateCafe)
   .delete(deleteCafe);
+
 
 export default router;

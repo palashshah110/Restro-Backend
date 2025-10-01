@@ -5,6 +5,12 @@ export interface ICafe extends Document {
   subdomain: string;
   createdAt: Date;
   plan: Object;
+  description: string;
+  location: string;
+  phone: string;
+  wifiName: string;
+  wifiPassword: string;
+  coverImage: string;
 }
 
 export interface IPlan extends Document {

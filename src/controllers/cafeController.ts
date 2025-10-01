@@ -61,23 +61,14 @@ export const getCafeById = async (req: Request, res: Response, next: NextFunctio
 
 export const updateCafe = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { name, subdomain } = req.body;
-    
-    // If subdomain is being updated, check uniqueness
-    if (subdomain) {
-      const existingCafe = await Cafe.findOne({ 
-        subdomain, 
-        _id: { $ne: req.params.id } 
-      });
-      
-      if (existingCafe) {
-        return next(new AppError('Subdomain already exists', 400));
-      }
+    const { name, description, location, phone, wifiName, wifiPassword} = req.body;
+    let coverImage = req.body.coverImage;
+    if(req.file){
+      coverImage = req.file.path;
     }
-
     const cafe = await Cafe.findByIdAndUpdate(
       req.params.id,
-      { name, subdomain },
+      { name, description, location, phone, wifiName, wifiPassword, coverImage },
       { new: true, runValidators: true }
     );
 

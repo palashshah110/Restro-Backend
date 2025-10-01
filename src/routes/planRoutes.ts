@@ -6,12 +6,12 @@ import {
   updatePlan,
   deletePlan
 } from '../controllers/planController';
-import { dummyAuth } from '../middleware/auth';
+import { authenticate } from '../middleware/auth';
 import { validatePlan, validateUpdatePlan } from '../middleware/validation';
 
 const router = Router();
 
-router.use(dummyAuth); 
+router.use(authenticate); 
 
 router.route('/')
   .post(validatePlan, createPlan)

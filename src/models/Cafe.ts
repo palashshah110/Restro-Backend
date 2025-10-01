@@ -20,11 +20,35 @@ const CafeSchema = new Schema<ICafe>({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Plan',
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
+  description: {
+    type: String,
+    trim: true,
+    maxlength: [500, 'Description cannot exceed 500 characters']
+  },
+  location:{
+    type: String
+  },
+  phone:{
+    type: String,
+    trim: true,
+    maxlength: [15, 'Phone number cannot exceed 15 characters']
+  },
+  wifiName:{
+    type: String,
+    trim: true,
+    maxlength: [100, 'WiFi name cannot exceed 100 characters']
+  },
+  wifiPassword:{
+    type: String,
+    trim: true,
+    maxlength: [100, 'WiFi password cannot exceed 100 characters']
+  },
+  coverImage:{
+    type: String,
+    trim: true,
+    maxlength: [500, 'Cover image URL cannot exceed 100 characters']
   }
-},{versionKey: false});
+},{versionKey: false, timestamps: true});
 
 // Indexes
 CafeSchema.index({ subdomain: 1 });

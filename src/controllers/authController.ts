@@ -18,7 +18,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       return next(new AppError('Please provide email and password', 500));
     }
 
-    const user = await User.findOne({ email }).select('+password');
+    const user = await User.findOne({ email }).select('+password').populate("cafe");
     if (!user) {
        return next(new AppError('Invalid credentials', 500));
     }
@@ -30,15 +30,11 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     }
 
     const token = generateToken(user._id.toString());
-
+    
     res.status(200).json({
       success: true,
       token,
-      user: {
-        id: user._id,
-        email: user.email,
-        role: user.role
-      }
+      user: {...user.toObject(), password:null}    
     });
   } catch (error) {
     next(error);

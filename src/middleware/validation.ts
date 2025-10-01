@@ -25,7 +25,13 @@ const cafeSchema = Joi.object({
 const updateCafeSchema = Joi.object({
   name: Joi.string().trim().min(2).max(100).optional(),
   subdomain: Joi.string().trim().lowercase().pattern(/^[a-z0-9-]+$/).min(3).max(50).optional(),
-  plan: Joi.string().optional()
+  plan: Joi.string().optional(),
+  description: Joi.string().trim().max(500).optional(),
+  location: Joi.string().trim().max(200).optional(),
+  phone: Joi.string().trim().max(20).optional(),
+  wifiName: Joi.string().trim().max(200).optional(),
+  wifiPassword: Joi.string().trim().max(200).optional(),
+  coverImage: Joi.optional()
 });
 
 // Plan validation schemas
